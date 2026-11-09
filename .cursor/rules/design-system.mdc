@@ -11,3 +11,4 @@ Follow the rules in @AGENTS.md. In short:
 - Every component has a story that covers its key states. Accessibility violations fail CI.
 - Work on a branch and open a pull request. `main` deploys to production.
 - Before you finish a change, run `pnpm lint && pnpm typecheck && pnpm test:stories`.
+- Each step of a contribution has written instructions in `.claude/skills/<name>/SKILL.md` (`start-change`, `preview-locally`, `design-review`, `explain-diff`, `finish-work`, `create-pr`, `address-review`). When the user asks for one of those steps, read that file and follow it.

@@ -18,6 +18,41 @@ Your assistant understands this. Say: *"Create a new branch, make this change, a
 
 ---
 
+## What you need to understand
+
+You don't need to write code. You need good judgement about the code that your assistant writes. These points matter most. The first four matter more than all the others.
+
+1. **`main` is production.** A branch is a draft, a PR is a proposal, and a merge is publishing. Every git rule in this guide follows from that.
+2. **Real data is messy.** Long names, nobody in the list, two hundred people in the list, a request that fails. AI is good at the happy path and quietly skips the rest. **You** are the person who insists on the other states. See [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md#stories-every-state-tested).
+3. **You can judge a diff without reading code.** Ask three questions. *Which files changed?* *Does that match what I asked for?* *Did anything that everything depends on change?* That means `globals.css`, `src/components/ui/`, `layout.tsx` or a config file. A copy change that touches eight files is a red flag, even if you can't read any of them.
+4. **Know where your lane ends.** Layout, components, tokens, copy and stories are yours. Data, business logic, logins and permissions, analytics, performance and privacy belong to engineering. If the plan touches any of those, bring in an engineer **before** building, not at review.
+5. **Think in components, not pixels.** Describe changes with the system's own parts: "a `Card` with an empty-state message", not "a white box with grey text". Know Storybook as well as you know your Figma library. See [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md).
+6. **Tokens reach everywhere.** Changing one token changes every screen that uses it. Expect many screenshot diffs, and look at all of them.
+7. **Accessibility is part of "done".** Contrast, a visible focus state, keyboard access, labels on icon-only buttons, and meaning that is never shown by colour alone. The tests catch some of these. You catch the rest by looking.
+8. **The words carry weight here.** This is a wellbeing product for children. How a "struggling" state is worded, who can see a student's mood, and what a teacher is prompted to do are safeguarding decisions, not only style choices. Follow the copy rules in `AGENTS.md`. If you are unsure, ask.
+9. **A red check is information.** If a check fails, fix the cause. If your assistant suggests disabling a rule, skipping a check or using "force", stop and ask a teammate.
+10. **Check by looking, not by trusting.** Your assistant sounds equally sure when it is right and when it is wrong. Its summary is not proof. The screens are. Look at the change on your laptop, in Storybook and on the Vercel preview.
+
+### Working well with your assistant
+
+- **Start from the ticket's acceptance criteria.** Include the states (empty, error, long text) and who will see the change.
+- **Describe the outcome, not the code.** Say *what* a teacher or student should see, *where* it appears, and *which states* it needs.
+- **Ask for a plan first.** Check which files will change, which components it will reuse, and what is new, before anything is built. This is the cheapest moment to catch a mistake.
+- **Work in small steps.** One change for each PR. If the request has an "and also", it is probably two PRs.
+- **Ask "why?"** whenever something surprises you. A good answer teaches you something. A vague answer is a warning sign.
+- **Use Figma as the intent, and the code as the truth.** If you attach a Figma design, name its variables the same as the tokens, so that the assistant uses tokens and not copied pixel values. For a small copy or spacing change, a description is enough.
+
+### Who reviews what
+
+When you open a PR, GitHub asks the right people to review it, based on which files changed (see `.github/CODEOWNERS`). In most teams, two kinds of review apply:
+
+- **Design review:** does it follow the design system and patterns, and is it right for the user? This is done by a design-system owner or another designer.
+- **Code review:** is the code sound and safe? Does it change data, performance or privacy? This is done by an engineer.
+
+A copy-only change might need only one of them. A new component or a token change needs both.
+
+---
+
 ## How a change gets to production
 
 ```

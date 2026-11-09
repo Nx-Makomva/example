@@ -61,7 +61,7 @@ your laptop ──► git push ──► pull request ──► Vercel check + p
 | Build | Vercel | The site wouldn't build, so production would break | Open the Vercel check's details and paste the log to your assistant. |
 | Visual tests | You, before committing a visual change | Something looks different from the approved screenshots | Read the next section. A visual change is often what you wanted. |
 
-Only the **Vercel** check is enforced by GitHub. The pre-push hook can be skipped with `git push --no-verify`. Don't do that. If you really must (for example in an emergency), say so in the PR.
+Only the **Vercel** check is enforced by GitHub. The pre-push hook runs on your laptop, so it is your first chance to catch a problem. Never skip it. If it fails, fix the failure. In a production emergency, roll back in Vercel (see *When something goes wrong in production*) instead of rushing a change past the checks.
 
 ---
 

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Runs before every `git push`. Catches problems on your machine in about 20
 # seconds, instead of waiting for Vercel to fail the PR.
-# Skip in an emergency with `git push --no-verify` (and tell your reviewer).
+# If it fails, fix the failure. Don't skip it. In a production emergency, roll
+# back in Vercel instead (see "When something goes wrong" in CONTRIBUTING.md).
 set -euo pipefail
 
 echo "▶ Pre-push checks: lint, typecheck, story + accessibility tests"

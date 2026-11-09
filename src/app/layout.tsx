@@ -19,14 +19,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en-GB" className={`${geistSans.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
         <header className="border-b border-border bg-surface-raised">
-          <nav className="mx-auto flex max-w-5xl items-center gap-6 px-6 py-4">
-            <Link href="/" className="text-lg font-semibold text-brand">
+          <nav className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-2 px-6 py-4 sm:gap-x-6">
+            <Link href="/" className="whitespace-nowrap text-lg font-semibold text-brand">
               Brightside
             </Link>
-            <Link href="/" className="text-sm text-text-muted hover:text-text">
+            <Link href="/" className="whitespace-nowrap text-sm text-text-muted hover:text-text">
               Class overview
             </Link>
-            <Link href="/check-in" className="text-sm text-text-muted hover:text-text">
+            <Link
+              href="/check-in"
+              className="whitespace-nowrap text-sm text-text-muted hover:text-text"
+            >
               Student check-in
             </Link>
           </nav>

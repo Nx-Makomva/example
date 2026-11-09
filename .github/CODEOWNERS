@@ -1,0 +1,14 @@
+# GitHub automatically asks these people to review a PR when it touches
+# matching files. In a real team, the design-system owners would be listed for
+# tokens and primitives, and engineers for config and CI.
+
+*                       @Nx-Makomva
+
+# Design system: a change here affects every screen.
+/src/app/globals.css    @Nx-Makomva
+/src/components/ui/     @Nx-Makomva
+
+# Pipeline: changes here affect what reaches production.
+/.github/               @Nx-Makomva
+/.githooks/             @Nx-Makomva
+/vercel.json            @Nx-Makomva

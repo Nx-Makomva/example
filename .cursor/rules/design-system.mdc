@@ -1,0 +1,13 @@
+---
+description: Brightside design-system rules for UI work
+globs: src/**/*.tsx, src/app/globals.css
+alwaysApply: false
+---
+
+Follow the rules in @AGENTS.md. In short:
+
+- Use only the semantic tokens in `src/app/globals.css`. There is no default Tailwind palette, no arbitrary values and no inline styles.
+- Reuse components from `src/components/ui/` before you create new ones.
+- Every component has a story that covers its key states. Accessibility violations fail CI.
+- Work on a branch and open a pull request. `main` deploys to production.
+- Before you finish a change, run `pnpm lint && pnpm typecheck && pnpm test:stories`.

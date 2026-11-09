@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Runs before every `git push`. Catches problems on your machine in about 20
+# seconds, instead of waiting for Vercel to fail the PR.
+# Skip in an emergency with `git push --no-verify` (and tell your reviewer).
+set -euo pipefail
+
+echo "▶ Pre-push checks: lint, typecheck, story + accessibility tests"
+pnpm lint
+pnpm typecheck
+pnpm test:stories

@@ -35,7 +35,7 @@ pnpm exec playwright install chromium    # the browser that the tests use
 ```bash
 git switch main
 git pull
-pnpm install    # only does work if a teammate added a package
+pnpm install    # only does something if a teammate added a package
 ```
 
 Or ask your assistant: *"start a new change"*. The `start-change` skill does these steps and creates your branch.

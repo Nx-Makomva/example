@@ -10,7 +10,11 @@ export default defineConfig({
   snapshotPathTemplate: "{testDir}/__screenshots__/{arg}{ext}",
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
-  reporter: process.env.CI ? [["html", { open: "never" }], ["github"]] : "list",
+  // Locally too, so designers can open playwright-report/index.html and compare
+  // expected, actual and diff images side by side.
+  reporter: process.env.CI
+    ? [["html", { open: "never" }], ["github"]]
+    : [["list"], ["html", { open: "never" }]],
   expect: {
     toHaveScreenshot: {
       // Tolerates anti-aliasing noise while still catching a 1px border change.

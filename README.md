@@ -17,7 +17,7 @@ pnpm dev          # the app            → http://localhost:3000
 pnpm storybook    # the design system  → http://localhost:6006
 ```
 
-Then read **[CONTRIBUTING.md](CONTRIBUTING.md)** before you make your first change.
+For the full setup, how to check a change yourself and troubleshooting, see **[RUNNING-LOCALLY.md](RUNNING-LOCALLY.md)**. Then read **[CONTRIBUTING.md](CONTRIBUTING.md)** before you make your first change.
 
 ## What's in the box
 
@@ -28,7 +28,7 @@ Then read **[CONTRIBUTING.md](CONTRIBUTING.md)** before you make your first chan
 | **Visual regression tests** | Every story is compared, pixel by pixel, against an approved screenshot. You see exactly what your change altered. |
 | **Lint guardrails** | Blocks raw hex colours, arbitrary values (`p-[13px]`) and inline styles. |
 | **AI context** (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`, `.mcp.json`) | Gives Claude Code and Cursor the design-system and copy rules, plus live component docs through the Storybook MCP server. |
-| **`/design-review` skill** | An AI review of your branch against the design-system, accessibility and copy rules before you open a PR. |
+| **Contribution skills** (`.claude/skills/`) | One Claude Code skill for each step of a contribution: `/start-change`, `/preview-locally`, `/design-review`, `/explain-diff`, `/finish-work`, `/create-pr` and `/address-review`. See [CONTRIBUTING.md](CONTRIBUTING.md) for when to use each one. |
 | **Pre-push hook** (`.githooks/pre-push`) | Runs lint, typecheck and the story/accessibility tests before your code leaves your laptop. |
 | **Vercel** | Every PR gets a preview URL and a required check (lint, typecheck, build). Merging to `main` deploys to production. |
 | **Branch protection** | `main` only accepts changes through a pull request. |

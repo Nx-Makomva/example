@@ -34,19 +34,19 @@ your laptop ──► git push ──► pull request ──► Vercel check + p
 
 ## A typical contribution, step by step
 
-1. **Start fresh.** Ask your assistant to *"switch to main and pull the latest changes"*, so you don't work from old files.
-2. **Create a branch** with a short name that says what it does, for example `soften-struggling-copy` or `add-empty-state-to-class-list`.
-3. **Describe the outcome, not the code.** For example: *"On the class overview, when nobody needs a follow-up, show a friendly empty state instead of an empty card."* The assistant reads `AGENTS.md` and knows the design-system rules.
-4. **Look at it yourself.**
-   - App: `pnpm dev` → http://localhost:3000
-   - Component in isolation: `pnpm storybook` → http://localhost:6006
-5. **Run the AI design review.** In Claude Code, type `/design-review`. In Cursor, ask it to *"review my branch against AGENTS.md"*. Fix what it finds, or decide on purpose not to.
-6. **Read the diff.** Ask the assistant to *"walk me through the diff in plain English"*. You don't need to understand every line. You **do** need to recognise what changed and confirm it matches what you asked for.
-7. **If it's a visual change, review the screenshots** (see *Visual changes* below).
-8. **Commit with a message that says why.** For example, "Show empty state when no students need follow-up", not "changes". Your assistant writes good commit messages if you ask.
-9. **Push and open a PR.** The pre-push hook runs first. Fill in the PR template, including before/after screenshots.
-10. **Check the Vercel preview.** Click through the screens you changed on the preview link, not only on your laptop.
-11. **Make sure the Vercel check is green**, then ask for a review.
+Each step names the Claude Code skill that does it for you. In Cursor, ask it to *"follow `.claude/skills/<name>/SKILL.md`"*.
+
+1. **Start fresh on a new branch** (`/start-change`). Your assistant gets the latest `main` and creates a branch with a short name that says what it does, for example `soften-struggling-copy` or `add-empty-state-to-class-list`.
+2. **Describe the outcome, not the code.** For example: *"On the class overview, when nobody needs a follow-up, show a friendly empty state instead of an empty card."* The assistant reads `AGENTS.md`, finds components to reuse and agrees a plan with you before editing.
+3. **Look at it yourself** (`/preview-locally`). See **[RUNNING-LOCALLY.md](RUNNING-LOCALLY.md)** for how to run the app and Storybook, and a five-point self-check.
+4. **Run the AI design review** (`/design-review`). It screenshots what you changed and checks it against the rules. Fix what it finds, or decide on purpose not to.
+5. **Read the diff** (`/explain-diff`). You don't need to understand every line. You **do** need to recognise what changed and confirm it matches what you asked for.
+6. **Run the checks** (`/finish-work`). Lint, typecheck, story tests and, for a visual change, the screenshot comparison (see *Visual changes* below).
+7. **Commit with a message that says why.** For example, "Show empty state when no students need follow-up", not "changes". Your assistant writes good commit messages if you ask.
+8. **Push and open a draft PR** (`/create-pr`). The pre-push hook runs first. Drag your before/after screenshots into the PR.
+9. **Check the Vercel preview.** Click through the screens you changed on the preview link, not only on your laptop. Then mark the PR **Ready for review**.
+10. **Respond to review** (`/address-review`). Your assistant explains each comment, makes the changes you agree to and drafts replies.
+11. **Make sure the Vercel check is green** and every conversation is resolved.
 12. **Merge.** Then open the production site and check your change is live.
 
 ---

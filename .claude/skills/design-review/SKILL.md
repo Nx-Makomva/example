@@ -11,7 +11,7 @@ This review is for judgement calls that automation cannot make. The pre-push hoo
 
 ## 1. Read the rules fresh
 
-Read `AGENTS.md` and the **Rules** section of `DESIGN-SYSTEM.md` in full on every run. Together they are the source of truth for the design-system, accessibility, copy and workflow rules. Every rule has an ID (`DS-04`, `A11Y-02`, `COPY-01`), and you cite it in each finding. Do not work from memory or from this file. This skill says *how* to review, and `AGENTS.md` says *what* the rules are. If the two ever disagree, `AGENTS.md` wins, and you tell the user about the conflict.
+Read `AGENTS.md` and the **Rules** section of `DESIGN-SYSTEM.md` in full on every run. The **Rules** section of `DESIGN-SYSTEM.md` is the source of truth for the design-system, accessibility and copy rules. `AGENTS.md` is the source of truth for the workflow and code conventions. Every rule has an ID (`DS-04`, `A11Y-02`, `COPY-01`), and you cite it in each finding. Do not work from memory or from this file. This skill says *how* to review, and those files say *what* the rules are. If this skill ever disagrees with them, they win, and you tell the user about the conflict.
 
 ## 2. Collect the change
 

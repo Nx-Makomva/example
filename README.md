@@ -8,7 +8,7 @@ It exists to **practise contributing to a production codebase as a designer**: y
 
 ## Quick start
 
-You need [Node.js](https://nodejs.org) 24+, [pnpm](https://pnpm.io/installation) and [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for visual tests).
+You need [Node.js](https://nodejs.org) 26 (pinned in `.nvmrc` and `package.json`), [pnpm](https://pnpm.io/installation) and [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for visual tests).
 
 ```bash
 pnpm install                             # also switches on the pre-push hook

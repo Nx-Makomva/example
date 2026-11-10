@@ -5,10 +5,23 @@ import { MOOD_DETAILS } from "@/lib/mood";
 import { formatCheckInTime, needsFollowUp, type Student } from "@/lib/students";
 
 export interface StudentListProps {
+  /** The students to show, in the order given. */
   students: Student[];
+  /** What to show when `students` is empty. Write it for the context. For example, "Everyone seems okay today." */
   emptyMessage?: string;
 }
 
+/**
+ * A list of students showing each one's latest mood, for teachers.
+ *
+ * Each row shows the name, the check-in time and a mood `Badge`. Students who
+ * need a follow-up also get a "Follow up" button.
+ *
+ * **Use for:** any teacher-facing list of students.
+ *
+ * Always give an `emptyMessage` that fits where the list is used, because an
+ * empty list should still tell the teacher something.
+ */
 export function StudentList({
   students,
   emptyMessage = "No students to show yet.",

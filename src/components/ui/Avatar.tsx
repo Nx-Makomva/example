@@ -19,10 +19,20 @@ function getInitials(name: string): string {
 }
 
 export interface AvatarProps {
+  /** The person's full name. The avatar shows up to two initials from it. */
   name: string;
+  /** `md` by default. Use `sm` in dense layouts. */
   size?: AvatarSize;
 }
 
+/**
+ * A person's initials in a circle, so you can spot them in a list.
+ *
+ * **Use for:** a student or teacher next to their name.
+ *
+ * **Don't use for:** showing a name on its own. The avatar is hidden from
+ * screen readers, so always show the full name in text next to it.
+ */
 export function Avatar({ name, size = "md" }: AvatarProps) {
   return (
     <span

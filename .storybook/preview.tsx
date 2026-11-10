@@ -6,6 +6,9 @@ import "../src/app/globals.css";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
 const preview: Preview = {
+  // Gives every component a Docs page built from its JSDoc comments, so designers
+  // and the Storybook MCP server read the same usage guidance.
+  tags: ["autodocs"],
   decorators: [
     (Story) => (
       <div className={`${geistSans.variable} bg-surface p-6 font-sans text-text antialiased`}>

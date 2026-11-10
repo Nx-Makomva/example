@@ -8,27 +8,110 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# Brightside — rules for AI assistants
+# Brightside: guide for AI agents
 
-Brightside is a fictional student-wellbeing product for schools. Teachers use it to see how their class is feeling. Students use it to check in each morning. Most people who change this repo are **designers**, not engineers. Explain what you are doing in plain language.
+Brightside is a student-wellbeing web app for UK schools. Students (aged 11–16) do a ten-second morning check-in, and teachers see how their class is feeling. The students and data are fictional, and there is no backend. But treat this repo as production: `main` deploys to the live site.
+
+## Who you are working with
+
+Most people who change this repo are **designers with no coding background**. They cannot check your code, so they rely on what you tell them and show them.
+
+- **Explain before and after.** Before you edit, say which files you will change and why. After, say what changed, in visual terms ("the badge now shows the mood name next to the dot").
+- **Show, don't just tell.** For any visual change, give them a URL to look at, or a screenshot (see `preview-locally`).
+- **Ask, don't assume.** If the audience (student or teacher), the screen, or the states are unclear, ask before you build.
+- **Say what you did beyond the request.** Name every change that they did not ask for, and let them decide whether it stays.
+- **Teach the vocabulary.** Define a term (*prop*, *token*, *story*, *baseline*) in a few words the first time you use it.
+
+## Stack
+
+| Tool | Version | What to know |
+| --- | --- | --- |
+| Next.js | 16 (App Router) | Read `node_modules/next/dist/docs/` before you write Next code (see the block above). Server components are the default. `cacheComponents` is on in `next.config.ts`. |
+| React | 19 | Add `"use client"` only to components that need state or event handlers. |
+| TypeScript | 5, `strict` | Import from `src/` with `@/`, for example `@/components/ui/Button`. |
+| Tailwind CSS | 4 | There is no `tailwind.config.js`. Tokens are CSS variables in `@theme` in `src/app/globals.css`. The default colour palette is switched off. |
+| Storybook | 10 (`@storybook/nextjs-vite`) | Addons: a11y, docs (autodocs), vitest, MCP. |
+| Vitest | 4, browser mode | Runs every story as a test in headless Chromium (`pnpm test:stories`). |
+| Playwright | 1.65 | Screenshot tests of every story, always inside Docker. |
+| pnpm / Node | pnpm 12 / Node 26.x (pinned in `package.json` and `.nvmrc`) | Use `pnpm`, never `npm` or `yarn`. Changing the Node version is a PR of its own. |
+
+## Commands
+
+| Command | What it does |
+| --- | --- |
+| `pnpm install` | Install packages. This also switches on the pre-push hook. |
+| `pnpm dev` | The app at http://localhost:3000 (`/` is the teacher view, `/check-in` is the student view) |
+| `pnpm storybook` | Storybook at http://localhost:6006, and its MCP server at `/mcp` |
+| `pnpm lint` | ESLint, including the design-system guardrails |
+| `pnpm typecheck` | TypeScript |
+| `pnpm test:stories` | Renders every story, and fails on errors and accessibility violations |
+| `pnpm test:visual:docker` | Compares every story with its approved screenshot. It needs Docker. It fails on purpose when something looks different. |
+| `pnpm test:visual:update` | Accepts new screenshots. Run it **only** after the user approves every diff. |
+| `pnpm build` | Production build (Vercel runs `pnpm lint && pnpm typecheck && pnpm build`) |
 
 ## Where things live
 
-| What | Where |
-| --- | --- |
-| Design tokens (colours, radii, shadows, font) | `src/app/globals.css` |
-| Design-system primitives | `src/components/ui/` |
-| Product-specific components | `src/components/features/` |
-| Pages (routes) | `src/app/**/page.tsx` |
-| Copy for moods | `src/lib/mood.ts` |
-| Sample data (there is no backend) | `src/lib/students.ts` |
-| Visual-test baselines | `tests/visual/__screenshots__/` |
+| Path | What | Who reviews a change |
+| --- | --- | --- |
+| `src/app/globals.css` | Design tokens. A change here changes **every screen**. | Design-system owners |
+| `src/components/ui/` | Design-system primitives, each with a story | Design-system owners |
+| `src/components/features/` | Brightside-specific components built from primitives | Default reviewers |
+| `src/app/**/page.tsx`, `layout.tsx` | Pages. `layout.tsx` is on every page. | Default reviewers |
+| `src/lib/mood.ts` | Mood labels, descriptions and tones (student-facing copy) | Default reviewers |
+| `src/lib/students.ts` | Fictional sample data | Default reviewers |
+| `src/lib/cn.ts` | Joins class names. It does **not** resolve Tailwind conflicts. | |
+| `src/docs/*.mdx` | Storybook docs pages, such as **Design system/Tokens** | |
+| `tests/visual/` | The screenshot test and its approved images (`__screenshots__/`) | |
+| `.storybook/` | Storybook config, including the a11y test level | Ask first |
+| `.claude/skills/` | Step-by-step instructions for each contribution step | |
+| `.githooks/`, `.github/`, `vercel.json`, `scripts/` | The pipeline to production | Ask first |
+
+Reviewers are requested automatically from `.github/CODEOWNERS`.
+
+## How to make a change
+
+Every change follows the same steps. Each step has a skill. In Claude Code, run it as `/<name>`. Other agents should read `.claude/skills/<name>/SKILL.md` and follow it.
+
+| Step | Skill | When |
+| --- | --- | --- |
+| 1 | `start-change` | The user asks for a change. Always start here if the branch is `main`. |
+| 2 | `preview-locally` | After an edit, so the user can see it |
+| 3 | `design-review` | Before the PR, to review against the rules below, with screenshots |
+| 4 | `explain-diff` | Before you commit, so the user confirms that the change matches their request |
+| 5 | `finish-work` | Before you call anything done, or push |
+| 6 | `create-pr` | To push and open a draft PR |
+| 7 | `address-review` | When the PR has review comments or conflicts |
+
+The rules for every change:
+
+- **Never commit to `main`.** It is protected and deploys to production. Work on a branch named after the outcome, such as `add-empty-state-to-class-list`.
+- **One change for each PR.** If a request has an "and also", suggest two PRs.
+- **Commit messages say why.** Write a short subject in the imperative ("Show empty state when nobody needs a follow-up"), then a body if the reason is not obvious.
+- **Agree a plan before you edit:** the files, what you reuse, what is new, and who sees it in production.
+
+## Code conventions
+
+Follow the patterns that are already here. Do not invent new ones.
+
+**Components**
+- One component for each file, with a PascalCase name and a **named** export (`export function Badge`). Only pages and layouts use default exports.
+- Map variants to classes with a `Record<Variant, string>` constant above the component (see `Button.tsx`). Do not build class strings in conditionals.
+- Each component has a `Props` interface. **Every prop has a JSDoc comment** that explains its options by meaning. The component itself has a JSDoc comment with **Use for** and **Don't use for**. Storybook's Docs pages and the MCP `docs-show` tool read these comments, so they are the component's documentation.
+- Combine classes with `cn()`. Pass `className` into a primitive only for placement in a layout (grid position, margin). Do not use it to restyle the primitive. `cn()` does not resolve conflicting Tailwind classes, so an override can silently lose.
+- Explain *why* in comments, never *what*.
+
+**Stories**
+- Each component has a story file next to it: `Badge.tsx` → `Badge.stories.tsx`. The title is `UI/<Name>` or `Features/<Name>`, and the meta uses `satisfies Meta<typeof Component>`.
+- Prefer `args` to custom `render` functions, so that the Controls panel works.
+- **Every story is also a screenshot test.** A story's ID is its file name in `tests/visual/__screenshots__/`. If you rename or remove a story, an approved screenshot is orphaned, and a new one is needed. Tell the user before you do it.
+
+**Styling:** follow rule DS-01 below. Spacing and type sizes use Tailwind's standard scale (`gap-4`, `text-sm`).
 
 ## Design-system, accessibility and copy rules
 
-Each rule has an ID. The full rule, the reason for it and what checks it are in [`DESIGN-SYSTEM.md`](DESIGN-SYSTEM.md#rules). When you review or explain a change, cite the ID and link to the rule (for example, `DESIGN-SYSTEM.md#ds-04-status-labels-use-badge`).
+Each rule has an ID. The full rule, the reason for it and what checks it are in [`DESIGN-SYSTEM.md`](DESIGN-SYSTEM.md#rules). When you review or explain a change, cite the ID and link to the rule (for example, `DESIGN-SYSTEM.md#ds-04-status-labels-use-badge`). Lint enforces only DS-01, and the story tests enforce only A11Y-01 and part of A11Y-05. Review covers everything else, so check those rules yourself.
 
-Before you build UI, look at what already exists. If the Storybook MCP server is running (`pnpm storybook`), call `docs-list` and `docs-show`. Each component's docs say when to use it and when not to. The **Design system/Tokens** docs entry lists every token and its meaning.
+Before you build UI, look at what already exists. With Storybook running, call the MCP tools `docs-list` and `docs-show`. Each component's docs say when to use it and when not to. The **Design system/Tokens** entry lists every token and its meaning. Without Storybook, read `src/components/` and `DESIGN-SYSTEM.md`.
 
 - **DS-01** Use tokens only. Tailwind's default palette is switched off (`bg-red-500` does nothing). Use `bg-concern`, `text-text-muted`, `border-border` and so on. No arbitrary values (`bg-[#fff]`, `p-[13px]`) and no `style={{}}`.
 - **DS-02** Name a new token by meaning (`--color-concern`), not by look (`--color-red`), and say why in the PR.
@@ -47,11 +130,34 @@ Before you build UI, look at what already exists. If the Storybook MCP server is
 - **COPY-03** Sentence case for headings and buttons.
 - **COPY-04** British English for UI text (en-GB). American English for code identifiers.
 
-## Workflow rules
+## Definition of done
 
-- Never commit to `main`. Create a branch, make the change, and open a pull request. `main` is protected and deploys to **production**.
-- Keep each PR to one change.
-- Before you say a change is done, run `pnpm lint && pnpm typecheck && pnpm test:stories`. The pre-push hook runs these too.
-- If the change is visual, run `pnpm test:visual:docker`. It will fail on purpose and show what changed. Walk the user through the diff report, and run `pnpm test:visual:update` only after they confirm that every change is intended (see `CONTRIBUTING.md`).
-- Never suggest `git push --no-verify` to get past a failing hook. Fix the failure.
-- Never force-push, rewrite history, delete branches, or disable a check without the user explicitly asking you to.
+Do not say that a change is done until all of these are true:
+
+1. `pnpm lint`, `pnpm typecheck` and `pnpm test:stories` pass. The pre-push hook runs the same three.
+2. For any change to a `.tsx` file or `globals.css`: you have run `pnpm test:visual:docker`, walked the user through every diff, and updated the baselines only after they approved each one.
+3. The user has seen the change at desktop and phone width (390 px).
+4. New or changed components have JSDoc on the component and its props, and stories for their real states.
+5. The user has confirmed that the diff matches what they asked for.
+
+## Boundaries
+
+**Always**
+- Use existing components and tokens. Cite rule IDs when you explain a choice.
+- Keep sample data fictional, and inside `src/lib/students.ts`.
+
+**Ask first**
+- Adding, removing or upgrading a dependency.
+- Adding, renaming or removing a token, or changing a component in `src/components/ui/`. These reach every screen.
+- Editing config or the pipeline: `.storybook/`, `eslint.config.mjs`, `next.config.ts`, `playwright.config.ts`, `vitest.config.ts`, `tsconfig.json`, `vercel.json`, `.githooks/`, `.github/`, `scripts/`.
+- Deleting files, or renaming or removing a story.
+- Running `pnpm test:visual:update`.
+- Posting anything on GitHub (PR comments, replies), or pushing.
+
+**Never**
+- Commit or push to `main`. Force-push, rewrite pushed history, or delete branches.
+- Skip or weaken a check: `--no-verify`, `eslint-disable`, `@ts-ignore`, `as any`, lowering the a11y test level, or editing a test so that it passes.
+- Add real names, real student data, analytics, tracking or network calls. This is a product about children's wellbeing. Any data or backend work goes to engineering first.
+- Use clinical or alarming words in student-facing UI (COPY-01).
+- Add secrets or credentials to the repo.
+- Add an AI co-author line or AI attribution to commits or PRs.

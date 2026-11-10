@@ -9,6 +9,9 @@
  *
  * Name tokens by *meaning* (concern, surface, muted), never by *appearance*
  * (red, grey-200), so a rebrand only touches this file.
+ *
+ * When you add, rename or remove a token, update src/docs/Tokens.mdx and the
+ * token table in DESIGN-SYSTEM.md too, so designers and agents see the same list.
  */
 @theme {
   --color-*: initial;

@@ -1,0 +1,77 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design system/Tokens" />
+
+export const Swatch = ({ token, className, meaning }) => (
+  <div className="flex items-center gap-4 border-b border-border py-3">
+    <div className={`size-12 shrink-0 rounded-control border border-border ${className}`} />
+    <div>
+      <p className="font-mono text-sm font-semibold">{token}</p>
+      <p className="text-sm text-text-muted">{meaning}</p>
+    </div>
+  </div>
+);
+
+export const Shape = ({ token, className, meaning }) => (
+  <div className="flex items-center gap-4 border-b border-border py-3">
+    <div className={`size-12 shrink-0 border border-border-strong bg-surface-raised ${className}`} />
+    <div>
+      <p className="font-mono text-sm font-semibold">{token}</p>
+      <p className="text-sm text-text-muted">{meaning}</p>
+    </div>
+  </div>
+);
+
+# Tokens
+
+A token is a named design decision. Code never says "this red". It says "the concern colour". Change the token, and every screen that uses it changes with it.
+
+Tokens are named by **meaning**, never by look. Use them in Tailwind classes, for example `bg-concern-subtle text-concern` or `rounded-card shadow-card`. Tailwind's built-in palette (`bg-red-500`) is switched off, so only these tokens exist.
+
+The source of truth is `src/app/globals.css`. To propose a new token, see *Proposing something new* in `DESIGN-SYSTEM.md`.
+
+## Surfaces and borders
+
+<Swatch token="surface" className="bg-surface" meaning="The page background." />
+<Swatch token="surface-raised" className="bg-surface-raised" meaning="Something that sits above the page: cards, the header." />
+<Swatch token="surface-sunken" className="bg-surface-sunken" meaning="Something set into the page: neutral badges, empty states." />
+<Swatch token="border" className="bg-border" meaning="Default dividers and outlines." />
+<Swatch token="border-strong" className="bg-border-strong" meaning="Outlines that need more emphasis, such as a secondary button." />
+
+## Text
+
+<Swatch token="text" className="bg-text" meaning="Main text." />
+<Swatch token="text-muted" className="bg-text-muted" meaning="Supporting text: hints, descriptions, secondary navigation." />
+<Swatch token="text-inverse" className="bg-text-inverse" meaning="Text on a dark fill, such as a primary button." />
+
+## Brand
+
+<Swatch token="brand" className="bg-brand" meaning="Brightside's identity and the primary action." />
+<Swatch token="brand-strong" className="bg-brand-strong" meaning="Hover and pressed states of brand fills. Avatar initials." />
+<Swatch token="brand-subtle" className="bg-brand-subtle" meaning="Light brand fills: a selected mood, avatars, ghost-button hover." />
+
+## Status
+
+Each status colour has a `-subtle` pair. Use the full colour for text on its own `-subtle` fill, as `Badge` does. Status colours always come with text, never colour alone.
+
+<Swatch token="positive" className="bg-positive" meaning="Things are good: the 'Great' and 'Good' moods." />
+<Swatch token="positive-subtle" className="bg-positive-subtle" meaning="The fill behind positive text." />
+<Swatch token="caution" className="bg-caution" meaning="Worth keeping an eye on: the 'Low' mood." />
+<Swatch token="caution-subtle" className="bg-caution-subtle" meaning="The fill behind caution text." />
+<Swatch token="concern" className="bg-concern" meaning="Needs attention: the 'Struggling' mood, follow-up counts." />
+<Swatch token="concern-subtle" className="bg-concern-subtle" meaning="The fill behind concern text." />
+
+## Focus
+
+<Swatch token="focus" className="bg-focus" meaning="The keyboard focus ring. Use it for focus outlines only." />
+
+## Shape and depth
+
+<Shape token="radius-control" className="rounded-control" meaning="Buttons, inputs, selectable options." />
+<Shape token="radius-card" className="rounded-card" meaning="Cards and tiles." />
+<Shape token="radius-pill" className="rounded-pill" meaning="Badges, avatars." />
+<Shape token="shadow-card" className="rounded-card shadow-card" meaning="The single elevation level, for cards and tiles." />
+
+## Spacing and type size
+
+These use Tailwind's standard scale. Spacing goes in steps of 4 px (`gap-4` is 16 px, `p-5` is 20 px). Type sizes are `text-sm`, `text-base`, `text-lg`, `text-3xl` and so on. Exact values in square brackets (`p-[13px]`) are blocked by lint.

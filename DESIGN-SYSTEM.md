@@ -121,15 +121,113 @@ That makes the stories your quality net. **A state without a story is not tested
 
 ---
 
-## Accessibility: the non-negotiables
+## Rules
 
-The tests catch some of these. You catch the rest by looking.
+Every rule has an ID. Reviews cite it (for example, "DS-04"), so the same mistake gets the same name each time. If one rule keeps breaking, that tells the design-system team where the docs, the components or the rule itself need work. It is not a problem with the people who broke it.
 
-- **Contrast:** text must stand out from its background. The tests check this.
-- **Meaning is never colour alone:** a mood badge shows its name as well as its colour, so a colour-blind teacher can still read it.
-- **Keyboard:** every action can be reached with Tab and used with Enter or Space, and you can always see where the focus is.
-- **Names:** an icon-only button has a label that a screen reader can say ("Follow up with Ben Hartley").
-- **Native controls:** a button is a real `<button>`, and a choice is a real radio input. The browser then provides keyboard and screen-reader support for free.
+**Checked by** says what catches a break: **lint** and **story tests** run before every push, and **review** means `/design-review` and the reviewer. IDs never change. A retired rule keeps its ID, and a new rule gets the next free number.
+
+### Design system
+
+#### DS-01: Use tokens only
+
+Colours, radii and shadows come from the [tokens](#tokens). No Tailwind palette colours, no exact values in square brackets, no inline styles.
+
+**Why:** a rebrand or a contrast fix changes one token, not a hundred files. **Checked by:** lint.
+
+#### DS-02: Name new tokens by meaning, and give a reason
+
+`--color-info`, not `--color-blue`. The PR says why no existing token fits. See [Proposing something new](#proposing-something-new).
+
+**Why:** names by meaning survive a rebrand, and every new token adds to what everyone must learn. **Checked by:** review.
+
+#### DS-03: Reuse, then extend, then create
+
+Use an existing component. If one nearly fits, add an option to it. Create a new component only when neither works. See [Reuse, extend or create?](#reuse-extend-or-create).
+
+**Why:** two near-identical components drift apart, and then the product looks inconsistent. **Checked by:** review.
+
+#### DS-04: Status labels use `Badge`
+
+Every status, state or category label is a `Badge`. Never a hand-built rounded `span` with a coloured background.
+
+**Why:** `Badge` brings the right tones, contrast and shape. A hand-built copy drifts the first time `Badge` changes. **Checked by:** review.
+
+#### DS-05: Actions use `Button`, and navigation uses a link
+
+Anything that does something on click is a `Button`. Anything that goes to another page is a link.
+
+**Why:** screen readers announce buttons and links differently, and users expect different keys to work on each. **Checked by:** review.
+
+#### DS-06: Primitives contain no product logic
+
+Components in `src/components/ui/` know nothing about moods, students or check-ins. That belongs in `src/components/features/`.
+
+**Why:** a primitive must work anywhere. Product logic inside one makes it impossible to reuse. **Checked by:** review.
+
+#### DS-07: Every component has a story for each real state
+
+Default, plus empty, error, disabled and long text where they can happen. See [Stories](#stories-every-state-tested).
+
+**Why:** a state without a story is not tested for accessibility and has no screenshot. **Checked by:** review.
+
+### Accessibility
+
+#### A11Y-01: Text has enough contrast
+
+Text must stand out from its background (WCAG AA).
+
+**Why:** low contrast makes text unreadable for many people, and on a phone in sunlight for everyone. **Checked by:** story tests.
+
+#### A11Y-02: Meaning is never colour alone
+
+A status shows text (or an icon) as well as colour. A mood badge says "Struggling". It is not only red.
+
+**Why:** about 1 in 12 men are colour-blind. A teacher must be able to read the class list. **Checked by:** review.
+
+#### A11Y-03: Use native controls
+
+A button is a real `<button>`, and a choice is a real radio input inside a `<fieldset>`. Never a `div` with a click handler.
+
+**Why:** native controls get keyboard and screen-reader support from the browser for free. **Checked by:** review.
+
+#### A11Y-04: Everything works with a keyboard, with visible focus
+
+Every action can be reached with Tab and used with Enter or Space. The focus ring (`focus` token) is always visible.
+
+**Why:** some people cannot use a mouse or a touch screen. **Checked by:** review.
+
+#### A11Y-05: Every control has a name
+
+An icon-only control has an `aria-label` that says what it does, such as "Follow up with Ben Hartley".
+
+**Why:** without a name, a screen reader says only "button". **Checked by:** story tests, then review.
+
+### Copy
+
+#### COPY-01: Student copy is warm, plain and short
+
+Students are 11–16. Never use clinical words such as "at risk" or "depressed" in student-facing UI.
+
+**Why:** a check-in has to feel safe, or students stop answering honestly. **Checked by:** review.
+
+#### COPY-02: Teacher copy suggests an action, not an alarm
+
+"Might want a quiet word", not "Alert: at-risk student".
+
+**Why:** calm, practical prompts lead to better conversations than alarms do. **Checked by:** review.
+
+#### COPY-03: Sentence case for headings and buttons
+
+"Send check-in", not "Send Check-In".
+
+**Why:** sentence case is easier to read and keeps the tone friendly. **Checked by:** review.
+
+#### COPY-04: British English in the UI
+
+UI text is en-GB ("colour", "recognise"). Code names stay in American English.
+
+**Why:** Brightside is for UK schools. **Checked by:** review.
 
 ---
 

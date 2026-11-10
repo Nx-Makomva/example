@@ -24,20 +24,28 @@ Brightside is a fictional student-wellbeing product for schools. Teachers use it
 | Sample data (there is no backend) | `src/lib/students.ts` |
 | Visual-test baselines | `tests/visual/__screenshots__/` |
 
-## Design-system rules (enforced by lint and CI)
+## Design-system, accessibility and copy rules
 
-1. **Use tokens only.** Tailwind's default palette is switched off. `bg-red-500` does nothing. Use `bg-concern`, `text-text-muted`, `border-border` and so on. Do not use arbitrary values (`bg-[#fff]`, `p-[13px]`) or `style={{}}`.
-2. **Reuse before you create.** Look in `src/components/ui/` first. If the Storybook MCP server is running (`pnpm storybook`), use it to list components and their props.
-3. **A new token needs a reason.** Add it to `globals.css`, name it by meaning (`--color-concern`), not by look (`--color-red`), and say why in the PR.
-4. **Every component has a story** next to it (`Button.tsx` → `Button.stories.tsx`). Cover the states that matter: default, empty, error, disabled, long text. Each story becomes an accessibility test and a visual-regression screenshot.
-5. **Accessibility is a blocker.** Stories fail CI on WCAG violations such as low colour contrast. Fix the token or component. Do not turn off the check.
-6. **Prefer native HTML** (`<button>`, `<input type="radio">`, `<fieldset>`) over `div`s with click handlers.
+Each rule has an ID. The full rule, the reason for it and what checks it are in [`DESIGN-SYSTEM.md`](DESIGN-SYSTEM.md#rules). When you review or explain a change, cite the ID and link to the rule (for example, `DESIGN-SYSTEM.md#ds-04-status-labels-use-badge`).
 
-## Copy rules
+Before you build UI, look at what already exists. If the Storybook MCP server is running (`pnpm storybook`), call `docs-list` and `docs-show`. Each component's docs say when to use it and when not to. The **Design system/Tokens** docs entry lists every token and its meaning.
 
-- Students are 11–16. Write warm, plain and short. Never use clinical words such as "at risk" or "depressed" in student-facing UI.
-- Teacher-facing copy is calm and practical. Suggest an action ("might want a quiet word"), not an alarm.
-- Use sentence case for headings and buttons. Use British English for UI text (en-GB). Use American English for code identifiers.
+- **DS-01** Use tokens only. Tailwind's default palette is switched off (`bg-red-500` does nothing). Use `bg-concern`, `text-text-muted`, `border-border` and so on. No arbitrary values (`bg-[#fff]`, `p-[13px]`) and no `style={{}}`.
+- **DS-02** Name a new token by meaning (`--color-concern`), not by look (`--color-red`), and say why in the PR.
+- **DS-03** Reuse, then extend (add a prop), then create. Look in `src/components/ui/` first.
+- **DS-04** Every status label is a `Badge`. Never a hand-built rounded `span`.
+- **DS-05** Actions use `Button`. Navigation uses a link.
+- **DS-06** `src/components/ui/` contains no product logic (moods, students, check-ins).
+- **DS-07** Every component has a story next to it (`Button.tsx` → `Button.stories.tsx`), covering default, empty, error, disabled and long text where they apply.
+- **A11Y-01** Text has enough contrast. Story tests fail on violations. Fix the token or the component. Never turn off the check.
+- **A11Y-02** Meaning is never shown by colour alone.
+- **A11Y-03** Use native controls (`<button>`, `<input type="radio">`, `<fieldset>`), not `div`s with click handlers.
+- **A11Y-04** Everything works with a keyboard, and the focus is always visible.
+- **A11Y-05** Every control has an accessible name.
+- **COPY-01** Students are 11–16. Write warm, plain and short. No clinical words such as "at risk" or "depressed" in student-facing UI.
+- **COPY-02** Teacher copy is calm and practical. Suggest an action ("might want a quiet word"), not an alarm.
+- **COPY-03** Sentence case for headings and buttons.
+- **COPY-04** British English for UI text (en-GB). American English for code identifiers.
 
 ## Workflow rules
 

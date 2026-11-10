@@ -11,7 +11,7 @@ This review is for judgement calls that automation cannot make. The pre-push hoo
 
 ## 1. Read the rules fresh
 
-Read `AGENTS.md` in full on every run. It is the source of truth for the design-system, accessibility, copy and workflow rules. Do not work from memory or from this file. This skill says *how* to review, and `AGENTS.md` says *what* the rules are. If the two ever disagree, `AGENTS.md` wins, and you tell the user about the conflict.
+Read `AGENTS.md` and the **Rules** section of `DESIGN-SYSTEM.md` in full on every run. Together they are the source of truth for the design-system, accessibility, copy and workflow rules. Every rule has an ID (`DS-04`, `A11Y-02`, `COPY-01`), and you cite it in each finding. Do not work from memory or from this file. This skill says *how* to review, and `AGENTS.md` says *what* the rules are. If the two ever disagree, `AGENTS.md` wins, and you tell the user about the conflict.
 
 ## 2. Collect the change
 
@@ -69,15 +69,18 @@ When you are done, stop only the servers that you started.
 
 ## 4. Check what automation cannot
 
-Use the sections of `AGENTS.md` (design-system rules, copy rules) as your checklist. Apply every rule to the diff and the screenshots. These are the judgement calls that lint and the accessibility tests miss, so give them the most attention:
+Apply every rule in the **Rules** section of `DESIGN-SYSTEM.md` to the diff and the screenshots. Focus on the rules marked **Checked by: review**, because lint and the story tests already cover the others. These need the most judgement:
 
-- **Reuse.** Does a new component duplicate one that is already in `src/components/ui/`? Compare their props and their look, not only their names.
-- **Token naming.** Is a new token named by meaning (`--color-concern`), not by look (`--color-red`)? Does the change or the PR give a reason for it?
-- **Story coverage.** Do the stories cover the states that this component can really get into? A list needs an empty state. A form needs an error state. Anything with a name needs long text.
-- **Layering.** Product logic (moods, students, check-ins) belongs in `features/`, not in a `ui/` primitive.
-- **Meaning by colour alone.** A mood or a status must show text or an icon as well as a colour.
-- **Focus and keyboard.** Is the focus state visible in the screenshots? Can a keyboard user reach every control? Is a `div` being used as a button?
-- **Copy tone.** Decide who reads each string: a student (11–16) or a teacher. Then check it against that audience's copy rules. Read the text in the screenshots, not only in the diff, because copy can come from `src/lib/`.
+- **DS-03 Reuse.** Does a new component duplicate one that is already in `src/components/ui/`? Compare their props and their look, not only their names. When Storybook is running, use `docs-show` to read each candidate component's "use for / don't use for" guidance.
+- **DS-04 Hand-built badges.** Look for a rounded `span` or `div` with a coloured fill used as a label.
+- **DS-02 Token naming.** Is a new token named by meaning, and does the change or the PR give a reason for it?
+- **DS-07 Story coverage.** Do the stories cover the states that this component can really get into? A list needs an empty state. A form needs an error state. Anything with a name needs long text.
+- **DS-06 Layering.** Product logic (moods, students, check-ins) belongs in `features/`, not in a `ui/` primitive.
+- **A11Y-02, A11Y-04** Look at the screenshots. Is any meaning shown by colour alone? Is the focus state visible?
+- **COPY-01 to COPY-04** Decide who reads each string: a student (11–16) or a teacher. Then check it against that audience's rules. Read the text in the screenshots, not only in the diff, because copy can come from `src/lib/`.
+
+Two checks have no rule ID, because they are about the PR rather than the design:
+
 - **One change.** Is this one change, or should it be split into separate PRs?
 - **Production reach.** Which screens and which users does this reach? A `globals.css` change or a change to the class overview reaches every teacher, every day.
 
@@ -91,11 +94,15 @@ Lead with the verdict on one line:
 
 Then list the findings, the most important first. A finding that a student or teacher would notice comes before a code-only one. For each finding, give:
 
-1. **What:** one sentence, with `file:line` or the screenshot path.
+1. **Rule and what:** the rule ID linked to its section, for example [`DS-04`](DESIGN-SYSTEM.md#ds-04-status-labels-use-badge), then one sentence with `file:line` or the screenshot path. The link anchor is the rule's heading in lowercase, with spaces turned into hyphens and punctuation removed.
 2. **Why it matters:** the person the rule protects and what would go wrong for them. For example: "A student who is colour-blind cannot tell 'struggling' from 'okay' if the badge is only a colour." This part is what teaches the rule, so do not skip it.
 3. **Fix:** the specific change, using the repo's own tokens and components.
 
 Then show the screenshots that you looked at, so that the designer can see what you saw.
+
+End with a one-line tally of the broken rules, for example: `Rules broken: DS-04 ×2, COPY-02 ×1`. The tally lets the design-system team see which rules break most often across PRs, and which docs or components need work as a result.
+
+**If a finding matches no rule,** report it with `no rule` in place of the ID, and say so plainly. A problem that keeps coming up without a rule shows a gap in the rules. Suggest that the designer mention it to the design-system owners.
 
 If nothing survives, say **Ready for PR** and stop. Do not invent a minor issue to show that you did the review.
 

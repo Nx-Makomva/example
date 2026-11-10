@@ -1,13 +1,3 @@
-<!-- BEGIN:nextjs-agent-rules -->
-
-## This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
-
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
-
-<!-- END:nextjs-agent-rules -->
-
 # Brightside: guide for AI agents
 
 Brightside is a student-wellbeing web app for UK schools. Students (aged 11–16) do a ten-second morning check-in, and teachers see how their class is feeling. The students and data are fictional, and there is no backend. But treat this repo as production: `main` deploys to the live site.
@@ -26,7 +16,7 @@ Most people who change this repo are **designers with no coding background**. Th
 
 | Tool | Version | What to know |
 | --- | --- | --- |
-| Next.js | 16 (App Router) | Read `node_modules/next/dist/docs/` before you write Next code (see the block above). Server components are the default. `cacheComponents` is on in `next.config.ts`. |
+| Next.js | 16 (App Router) | **This version differs from your training data.** Read the guide that matches the installed version in `node_modules/next/dist/docs/` before you write Next code, and heed deprecation notices. Server components are the default. `cacheComponents` is on in `next.config.ts`. |
 | React | 19 | Add `"use client"` only to components that need state or event handlers. |
 | TypeScript | 5, `strict` | Import from `src/` with `@/`, for example `@/components/ui/Button`. |
 | Tailwind CSS | 4 | There is no `tailwind.config.js`. Tokens are CSS variables in `@theme` in `src/app/globals.css`. The default colour palette is switched off. |

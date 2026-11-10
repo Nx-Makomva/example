@@ -33,7 +33,7 @@ Most people who change this repo are **designers with no coding background**. Th
 | Storybook | 10 (`@storybook/nextjs-vite`) | Addons: a11y, docs (autodocs), vitest, MCP. |
 | Vitest | 4, browser mode | Runs every story as a test in headless Chromium (`pnpm test:stories`). |
 | Playwright | 1.65 | Screenshot tests of every story, always inside Docker. |
-| pnpm / Node | pnpm 12 / Node 24 or newer | Use `pnpm`, never `npm` or `yarn`. |
+| pnpm / Node | pnpm 12 / Node 26.x (pinned in `package.json` and `.nvmrc`) | Use `pnpm`, never `npm` or `yarn`. Changing the Node version is a PR of its own. |
 
 ## Commands
 

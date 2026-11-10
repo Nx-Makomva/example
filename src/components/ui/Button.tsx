@@ -18,10 +18,28 @@ const SIZE_CLASSES: Record<ButtonSize, string> = {
 };
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * How much attention the action needs.
+   * - `primary`: the one main action in a view, such as "Send check-in". Use at most one per view.
+   * - `secondary`: other actions next to it, or an action repeated in a list, such as "Follow up".
+   * - `ghost`: quiet, low-priority actions, such as "View history".
+   */
   variant?: ButtonVariant;
+  /** `md` by default. Use `sm` inside dense layouts such as list rows. */
   size?: ButtonSize;
 }
 
+/**
+ * Every clickable action in Brightside.
+ *
+ * **Use for:** anything that *does* something when clicked: submit, follow up, open, dismiss.
+ *
+ * **Don't use for:** going to another page. Use a link (`next/link`) for that.
+ * Don't make a clickable `div` or `span` either. A real `<button>` gives keyboard
+ * and screen-reader support for free.
+ *
+ * An icon-only button needs an `aria-label` that says what it does.
+ */
 export function Button({
   variant = "primary",
   size = "md",

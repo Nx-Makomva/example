@@ -7,6 +7,14 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { MOOD_DETAILS, type Mood } from "@/lib/mood";
 
+/**
+ * The student's full morning check-in: pick a mood, send it, see a thank-you message.
+ *
+ * Students who pick a mood that needs a follow-up get a reassuring message
+ * that their teacher may check in with them. They never see warning or clinical language.
+ *
+ * There is no backend yet, so sending only changes what the screen shows.
+ */
 export function CheckInForm() {
   const [mood, setMood] = useState<Mood | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);

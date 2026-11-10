@@ -4,12 +4,22 @@ import { cn } from "@/lib/cn";
 import { MOOD_DETAILS, MOODS, type Mood } from "@/lib/mood";
 
 export interface MoodPickerProps {
+  /** The selected mood, or `null` before the student has picked one. */
   value: Mood | null;
+  /** Called with the mood that the student picks. */
   onChange: (mood: Mood) => void;
 }
 
-// Native radio inputs (visually restyled) give keyboard and screen-reader
-// support for free; a row of buttons would need all of that rebuilt by hand.
+/**
+ * The five mood options that a student picks from at check-in.
+ *
+ * The labels and descriptions come from `src/lib/mood.ts`. Change the copy
+ * there, not here.
+ *
+ * It is built from native radio inputs, restyled. That gives keyboard
+ * (arrow-key) and screen-reader support for free. A row of buttons would need
+ * all of that rebuilt by hand.
+ */
 export function MoodPicker({ value, onChange }: MoodPickerProps) {
   return (
     <fieldset>

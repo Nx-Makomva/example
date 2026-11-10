@@ -117,6 +117,7 @@ After `pnpm test:visual:docker`, open `playwright-report/index.html` in your bro
 | --- | --- | --- |
 | `command not found: pnpm` | pnpm is not installed | Install it (see the setup above), then open a new terminal |
 | `Port 3000 is in use` | The app is already running in another terminal | Use that one, or stop it with Ctrl + C first |
+| A Storybook **Docs** page is blank | Storybook's cache is out of date, often after a `git pull` | Stop Storybook with Ctrl + C, run `pnpm storybook` again, and refresh the page |
 | `Cannot find module …` after a `git pull` | A teammate added a package | Run `pnpm install` |
 | `Cannot connect to the Docker daemon` | Docker Desktop is not open | Open Docker Desktop, wait for it to start, then try again |
 | The page does not show your change | The wrong branch, or the file was not saved | Run `git branch --show-current`, and save the file |

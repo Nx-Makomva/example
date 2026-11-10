@@ -2,7 +2,7 @@
 
 This guide is for designers. It explains what the design system contains, how its rules work, and how to propose something new. You do not need to read code to use it.
 
-The AI assistant follows the same rules from `AGENTS.md`. Lint and the accessibility tests enforce them, so a change that breaks them cannot be pushed.
+AI assistants follow the same rules: `AGENTS.md` points them to the [Rules](#rules) below. Lint and the accessibility tests enforce a few of the rules, and a change that breaks those cannot be pushed. Review catches the rest. Each rule says which applies.
 
 > **Where to see it:** run `pnpm storybook` and open http://localhost:6006. Every component and every state is there. See [RUNNING-LOCALLY.md](RUNNING-LOCALLY.md).
 

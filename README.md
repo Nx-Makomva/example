@@ -27,7 +27,7 @@ For the full setup, how to check a change yourself and troubleshooting, see **[R
 | **Storybook** | Shows every component and state in isolation. Each story is automatically tested for accessibility and screenshotted. |
 | **Visual regression tests** | Every story is compared, pixel by pixel, against an approved screenshot. You see exactly what your change altered. |
 | **Lint guardrails** | Blocks raw hex colours, arbitrary values (`p-[13px]`) and inline styles. |
-| **AI context** (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`, `.mcp.json`) | Gives Claude Code and Cursor the design-system and copy rules, plus live component docs through the Storybook MCP server. |
+| **AI context** (`AGENTS.md`, `CLAUDE.md`, `.mcp.json`) | `AGENTS.md` gives every AI assistant (Claude Code, Cursor and others) the stack, conventions, rules and limits. `CLAUDE.md` adds Claude-only extras. The Storybook MCP server gives assistants live component docs. |
 | **Contribution skills** (`.claude/skills/`) | One Claude Code skill for each step of a contribution: `/start-change`, `/preview-locally`, `/design-review`, `/explain-diff`, `/finish-work`, `/create-pr` and `/address-review`. See [CONTRIBUTING.md](CONTRIBUTING.md) for when to use each one. |
 | **Pre-push hook** (`.githooks/pre-push`) | Runs lint, typecheck and the story/accessibility tests before your code leaves your laptop. |
 | **Vercel** | Every PR gets a preview URL and a required check (lint, typecheck, build). Merging to `main` deploys to production. |
@@ -52,9 +52,13 @@ src/
   app/                  pages (routes) and globals.css (tokens)
   components/ui/        design-system primitives + stories
   components/features/  product components + stories
+  docs/                 Storybook docs pages (Tokens)
   lib/                  mood copy, sample data, helpers
 tests/visual/           visual-regression test + approved screenshots
+.storybook/             Storybook config
+.claude/skills/         one skill for each contribution step
 .githooks/              pre-push checks
 .github/                PR template, CODEOWNERS
+scripts/                runs the visual tests in Docker
 vercel.json             what Vercel runs before it builds
 ```

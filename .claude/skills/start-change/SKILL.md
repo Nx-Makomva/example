@@ -13,7 +13,7 @@ Restate what the user wants in one sentence, in terms of what a teacher or stude
 
 If any of these are unclear, ask before you go on:
 
-- **Who sees it:** students (11–16), teachers, or both? The two audiences have different copy rules (see `AGENTS.md`).
+- **Who sees it:** students (11–16), teachers, or both? The two audiences have different copy rules (`COPY-01` and `COPY-02` in `DESIGN-SYSTEM.md`).
 - **Where:** which screen or component?
 - **Which states:** what happens when the content is empty, very long, or has an error?
 
@@ -40,7 +40,7 @@ If the request is really two changes (for example, "new copy, and also move the 
 
 ## 4. Find what already exists
 
-Read `AGENTS.md` for the rules. Then look for what to reuse. Do not create something new until you have done this:
+Read the **Rules** section of `DESIGN-SYSTEM.md`. Then look for what to reuse (rule `DS-03`). Do not create something new until you have done this:
 
 - **Components:** if Storybook is running (`curl -sf http://localhost:6006 >/dev/null`), use the Storybook MCP server to list components and their props. If it is not running, read `src/components/ui/` and `src/components/features/`, and their stories.
 - **Tokens:** read `src/app/globals.css`. Find the semantic token for each colour, radius and shadow that you plan to use.
@@ -52,7 +52,7 @@ Before you edit anything, show the user a short plan:
 
 1. **Files** that will change, and why each one changes.
 2. **What you reuse:** components and tokens.
-3. **Anything new:** a new component, story or token, and why nothing that exists fits. A new token needs a reason that goes in the PR (see `AGENTS.md`).
+3. **Anything new:** a new component, story or token, and why nothing that exists fits. A new token needs a reason that goes in the PR (`DS-02`).
 4. **Stories** that you will add or update, and their states (default, empty, error, disabled, long text).
 5. **Risk:** who sees it in production. A change to `globals.css` or to a `ui/` primitive reaches every screen. Say so.
 

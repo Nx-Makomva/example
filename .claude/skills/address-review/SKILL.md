@@ -31,14 +31,14 @@ List each unresolved comment as:
 
 1. **Who and where:** the reviewer, and `file:line`.
 2. **What they are asking for,** in one plain sentence. If they used a technical term, explain it.
-3. **Why it probably matters:** link it to a rule in `AGENTS.md` where you can ("This is the 'meaning not carried by colour alone' rule").
+3. **Why it probably matters:** cite the rule ID and link it, where one applies (for example, [`A11Y-02`](DESIGN-SYSTEM.md#a11y-02-meaning-is-never-colour-alone): meaning is never colour alone).
 4. **Your suggestion:** do it, or discuss it. Some comments are questions or opinions. It is fine to reply instead of changing code.
 
 Then ask the user which ones to act on. Wait for their answer.
 
 ## 4. Make the agreed changes
 
-- Make only the changes that the user agreed to. Keep each fix small and on-system (see `AGENTS.md`).
+- Make only the changes that the user agreed to. Keep each fix small and on-system (see the rules in `DESIGN-SYSTEM.md`).
 - After the fixes, run `finish-work`. A visual fix means new screenshots, and the user must approve them as usual.
 - Commit with a message that says what the feedback was about. For example: "Show mood text next to the badge colour, from review". Add new commits. Do not amend or rewrite the earlier ones, because the reviewer has already seen them.
 
@@ -51,7 +51,7 @@ git fetch origin
 git merge origin/main
 ```
 
-Use a merge, not a rebase. A rebase rewrites history and would need a force-push, which this repo does not allow (see `AGENTS.md`).
+Use a merge, not a rebase. A rebase rewrites history and would need a force-push, which this repo does not allow (see *Boundaries* in `AGENTS.md`).
 
 If there are conflicts, do not resolve them silently. For each conflicted file, explain in plain language what *your* branch changed, what *main* changed, and what the combined result should be. Then ask the user to confirm before you resolve it. If you are not sure what the other change was for, find its PR (`git log origin/main -- <file>`), and suggest asking its author.
 

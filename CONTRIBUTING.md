@@ -29,7 +29,7 @@ You don't need to write code. You need good judgement about the code that your a
 5. **Think in components, not pixels.** Describe changes with the system's own parts: "a `Card` with an empty-state message", not "a white box with grey text". Know Storybook as well as you know your Figma library. See [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md).
 6. **Tokens reach everywhere.** Changing one token changes every screen that uses it. Expect many screenshot diffs, and look at all of them.
 7. **Accessibility is part of "done".** Contrast, a visible focus state, keyboard access, labels on icon-only buttons, and meaning that is never shown by colour alone. The tests catch some of these. You catch the rest by looking.
-8. **The words carry weight here.** This is a wellbeing product for children. How a "struggling" state is worded, who can see a student's mood, and what a teacher is prompted to do are safeguarding decisions, not only style choices. Follow the copy rules in `AGENTS.md`. If you are unsure, ask.
+8. **The words carry weight here.** This is a wellbeing product for children. How a "struggling" state is worded, who can see a student's mood, and what a teacher is prompted to do are safeguarding decisions, not only style choices. Follow the copy rules (`COPY-01` to `COPY-04` in [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md#copy)). If you are unsure, ask.
 9. **A red check is information.** If a check fails, fix the cause. If your assistant suggests disabling a rule, skipping a check or using "force", stop and ask a teammate.
 10. **Check by looking, not by trusting.** Your assistant sounds equally sure when it is right and when it is wrong. Its summary is not proof. The screens are. Look at the change on your laptop, in Storybook and on the Vercel preview.
 
@@ -69,7 +69,7 @@ your laptop ──► git push ──► pull request ──► Vercel check + p
 
 ## A typical contribution, step by step
 
-Each step names the Claude Code skill that does it for you. In Cursor, ask it to *"follow `.claude/skills/<name>/SKILL.md`"*.
+Each step names the Claude Code skill that does it for you. Cursor and other assistants read the same steps from `AGENTS.md`. You can also ask them to *"follow `.claude/skills/<name>/SKILL.md`"*.
 
 1. **Start fresh on a new branch** (`/start-change`). Your assistant gets the latest `main` and creates a branch with a short name that says what it does, for example `soften-struggling-copy` or `add-empty-state-to-class-list`.
 2. **Describe the outcome, not the code.** For example: *"On the class overview, when nobody needs a follow-up, show a friendly empty state instead of an empty card."* The assistant reads `AGENTS.md`, finds components to reuse and agrees a plan with you before editing.
@@ -119,6 +119,18 @@ Every Storybook story has an approved screenshot in `tests/visual/__screenshots_
 - **Undo first, investigate second.** In Vercel, open **Deployments**, choose the previous production deployment, and select **Instant Rollback**. This takes seconds and does not touch git.
 - **Then fix it properly.** Ask your assistant to *"revert the PR that caused this"*. That creates a new PR that reverses the change, and it goes through the same checks. Never rewrite `main`'s history to "undo" a change.
 - **Tell people.** Post in the team channel what broke, who it affected and that it's rolled back.
+
+---
+
+## If you committed to `main` by mistake
+
+GitHub will refuse the push, so nothing has reached production. Your work is safe, and the fix takes a minute. Ask your assistant to *"move my commits off main onto a new branch"*. It should:
+
+1. Create a branch at your commit, so the work is saved (`git branch <new-branch-name>`).
+2. Move your local `main` back to match GitHub (`git switch main`, then `git reset --hard origin/main`). This is safe **only** because step 1 saved your work. Check that the branch exists before this step.
+3. Switch to the new branch and open a PR from it as usual.
+
+If your assistant suggests `reset --hard` *without* saving your work on a branch first, stop. That would delete your commit.
 
 ---
 

@@ -7,7 +7,7 @@ description: Run Brightside's checks before a change is called done — lint, ty
 
 Run this before you tell the user that a change is done, and before every push. The reader is a designer. Explain each failure in plain language: what broke, who it would affect in production, and the fix.
 
-The order and commands come from the workflow rules in `AGENTS.md`. Read that section again if this file and `AGENTS.md` ever disagree. `AGENTS.md` wins.
+The order and commands come from *Definition of done* in `AGENTS.md`. If this file and `AGENTS.md` ever disagree, `AGENTS.md` wins.
 
 ## 1. Check where you are
 
@@ -35,7 +35,7 @@ If a check fails, fix the cause and run that check again. Do not go on to the ne
 
 | Failure | What it usually means | Fix |
 | --- | --- | --- |
-| Lint: arbitrary value, raw colour, `style={{}}` | A style that is not from the design system | Use the matching token from `src/app/globals.css`. If no token fits, stop and ask the user, because a new token needs a reason (see `AGENTS.md`). |
+| Lint: arbitrary value, raw colour, `style={{}}` | A style that is not from the design system | Use the matching token from `src/app/globals.css`. If no token fits, stop and ask the user, because a new token needs a reason ([`DS-02`](DESIGN-SYSTEM.md#ds-02-name-new-tokens-by-meaning-and-give-a-reason)). |
 | Typecheck | A prop name or type that does not fit the component | Fix the call or the prop. Never use `@ts-ignore` or `as any`. |
 | Story test: accessibility violation | For example, low colour contrast or a control without a name | Fix the token or the component. Never switch off the check or the rule. |
 | Story test: story crashed | The component throws with the story's args | Fix the component or the story's args. |

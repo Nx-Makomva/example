@@ -12,7 +12,7 @@ Get the designer looking at their change in a real browser, quickly. The human v
 Run these in order, and stop at the first one that fails. Use the fix from the troubleshooting table in `RUNNING-LOCALLY.md`, and explain it in one sentence.
 
 ```bash
-node -v                           # needs v24 or higher
+node -v                           # needs v26 (see .nvmrc)
 pnpm -v
 test -d node_modules || pnpm install
 ```

@@ -14,7 +14,7 @@ You do this once on each laptop.
 
 | Tool | Why you need it | Check that it works |
 | --- | --- | --- |
-| [Node.js](https://nodejs.org) 24 or newer (the repo uses 26, see `.nvmrc`) | Runs the app | `node -v` shows `v24` or higher |
+| [Node.js](https://nodejs.org) 26 (pinned in `.nvmrc`; with [nvm](https://github.com/nvm-sh/nvm), run `nvm use`) | Runs the app | `node -v` shows `v26` |
 | [pnpm](https://pnpm.io/installation) | Installs the project's packages | `pnpm -v` shows a version |
 | [Docker Desktop](https://www.docker.com/products/docker-desktop/) | Runs the screenshot tests in the same way on every laptop | Docker Desktop is open, and `docker info` shows no error |
 | [GitHub CLI](https://cli.github.com/) | Lets your assistant open pull requests for you | `gh auth status` shows that you are logged in |

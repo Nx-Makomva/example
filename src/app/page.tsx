@@ -30,13 +30,9 @@ export default function ClassOverviewPage() {
       </div>
 
       <Card
-        title="Needs attention"
-        description="Students who might want a quiet word today."
+        title="Your class today"
+        description="Anyone who might want a quiet word is at the top."
       >
-        <StudentList students={followUps} emptyMessage="Everyone seems okay today." />
-      </Card>
-
-      <Card title="Whole class">
         <StudentList students={STUDENTS} />
       </Card>
     </div>

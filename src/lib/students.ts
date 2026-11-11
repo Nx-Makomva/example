@@ -1,4 +1,4 @@
-import { MOOD_DETAILS, type Mood } from "@/lib/mood";
+import { MOOD_DETAILS, MOODS, type Mood } from "@/lib/mood";
 
 export interface CheckIn {
   mood: Mood;
@@ -26,6 +26,48 @@ export const STUDENTS: Student[] = [
 
 export function needsFollowUp(student: Student): boolean {
   return student.latestCheckIn !== null && MOOD_DETAILS[student.latestCheckIn.mood].needsFollowUp;
+}
+
+export type StudentGroupId = "needs-attention" | "not-checked-in" | "checked-in-okay";
+
+export interface StudentGroup {
+  id: StudentGroupId;
+  title: string;
+  students: Student[];
+}
+
+// MOODS runs from best to worst, so a later position means a harder morning.
+// A student with no check-in has no mood, so they get -1 and sort last.
+function moodSeverity(student: Student): number {
+  return student.latestCheckIn ? MOODS.indexOf(student.latestCheckIn.mood) : -1;
+}
+
+/**
+ * Splits a class into the groups a teacher scans top to bottom:
+ * who might want a quiet word, who has not checked in, and everyone else.
+ * The groups are worked out from the list you pass in, so nothing is stored twice.
+ */
+export function groupByPriority(students: Student[]): StudentGroup[] {
+  return [
+    {
+      id: "needs-attention",
+      title: "Needs attention",
+      // `filter` returns a new array, so sorting it never reorders the original list.
+      students: students.filter(needsFollowUp).sort((a, b) => moodSeverity(b) - moodSeverity(a)),
+    },
+    {
+      id: "not-checked-in",
+      title: "Not checked in yet",
+      students: students.filter((student) => student.latestCheckIn === null),
+    },
+    {
+      id: "checked-in-okay",
+      title: "Checked in and okay",
+      students: students.filter(
+        (student) => student.latestCheckIn !== null && !needsFollowUp(student),
+      ),
+    },
+  ];
 }
 
 const TIME_FORMAT = new Intl.DateTimeFormat("en-GB", {
